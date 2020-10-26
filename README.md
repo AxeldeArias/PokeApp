@@ -13,7 +13,7 @@ http://reactnative.dev/docs/environment-setup (sección React Native CLI)
 ## Ejecución
 
 1. npm install
-
-2. react native start
-
-3. react-native run-android
+2. conectar el dispositivo o emulador android
+3. Abrir 2 terminales y e ingresar:
+  En la primera: npx react native start 
+  En la segunda: npx react-native run-android

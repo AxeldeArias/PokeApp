@@ -56,7 +56,7 @@ export const PokemonDetail = ({ route }) => {
             {pokemonData?.flavor_text_entries?.filter(({ language }) => language.name === 'en').map(({ flavor_text: flavorText }, index) => (
               <View style={styles.paragraph} key={String(index)}>
                 <CustomText>
-                  {capitalizeFirstLetter(flavorText)}
+                  {flavorText.replace(/\n|\r/g, "")}
                 </CustomText>
               </View>
             ))}
