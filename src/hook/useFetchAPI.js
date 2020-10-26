@@ -1,51 +1,46 @@
 import {
   useCallback, useEffect, useRef, useState,
 } from 'react';
+import { customFetch } from '../utils/customFetch';
+import { useIsMountedRef } from './useIsMountedRef';
 
 export const useFetchAPI = (firstUrl) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(true);
+  const [state, setState] = useState({ loading: false, error: '' });
   const [pokemonData, setPokemonData] = useState({ results: [] });
   const firstRenderRef = useRef(true);
-  const isMountedRef = useRef(null);
+  const isMountedRef = useIsMountedRef();
+  const { loading, error } = state;
 
-  const getPokemonDataApi = useCallback(async (url) => {
+  const getPokemonDataApi = useCallback((url) => {
     if (!loading && url) {
-      let errorFound = '';
-      let data = [];
-
-      setLoading(true);
-      try {
-        const resp = await fetch(
-          url,
-        );
-        data = await resp.json();
-      } catch (e) {
-        errorFound = 'Error when consulting pokemons';
-      } finally {
-        setError(errorFound);
+      const errorFound = '';
+      setState((prev) => ({ ...prev, loading: true }));
+      customFetch(url).then((data) => {
         if (isMountedRef.current) {
-          setLoading(false);
           if (!errorFound) {
             setPokemonData((prev) => {
-              if (url !== firstUrl) {
-                data.results = [...prev.results, ...data.results];
+              let newResult = [];
+              if (url === firstUrl) {
+                newResult = data.results;
+              } else {
+                newResult = [...prev.results, ...data.results];
               }
-              return data;
+              return { ...data, results: newResult };
             });
+            setState({ loading: false, error: '' });
           }
         }
-      }
+      }).catch(() => {
+        setState({ loading: false, error: 'Error when consulting pokemons' });
+      });
     }
-  }, [loading, firstUrl]);
+  }, [loading, firstUrl, isMountedRef]);
 
   useEffect(() => {
-    isMountedRef.current = true;
     if (firstRenderRef.current) {
       firstRenderRef.current = false;
       getPokemonDataApi(firstUrl);
     }
-    return () => { isMountedRef.current = false; };
   }, [getPokemonDataApi, firstUrl]);
 
   return {

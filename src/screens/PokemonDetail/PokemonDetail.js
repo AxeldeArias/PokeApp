@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  View, StyleSheet, ScrollView,
-} from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 import { CustomLoading } from '../../components/CustomLoading';
 import { CustomText } from '../../components/CustomText';

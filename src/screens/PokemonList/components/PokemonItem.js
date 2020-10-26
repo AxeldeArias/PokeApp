@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const PokemonItem = ({ item, index, onPress }) => (
+export const PokemonItem = React.memo(({ item, index, onPress }) => (
   <TouchableOpacity style={styles.item} onPress={onPress}>
     <View style={styles.number}>
       <CustomText style={styles.pokemonName}>{`${index + 1}-`}</CustomText>
@@ -36,4 +36,4 @@ export const PokemonItem = ({ item, index, onPress }) => (
       <CustomText style={styles.pokemonName}>{capitalizeFirstLetter(item.name)}</CustomText>
     </View>
   </TouchableOpacity>
-);
+));
