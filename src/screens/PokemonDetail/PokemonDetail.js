@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { SvgUri } from 'react-native-svg';
+import {
+  View, StyleSheet, ScrollView, Image,
+} from 'react-native';
 import { CustomLoading } from '../../components/CustomLoading';
 import { CustomText } from '../../components/CustomText';
 import { Screen } from '../../components/Screen';
@@ -29,6 +30,10 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 15,
   },
+  image: {
+    width: 300,
+    height: 300,
+  },
 });
 
 export const PokemonDetail = ({ route }) => {
@@ -44,9 +49,11 @@ export const PokemonDetail = ({ route }) => {
             <View styles={styles.titleContainer}>
               <CustomText style={styles.title}>{capitalizeFirstLetter(pokeImage?.name)}</CustomText>
             </View>
-            <SvgUri
-              width={300}
-              uri={pokeImage?.sprites?.other?.dream_world?.front_default}
+            <Image
+              style={styles.image}
+              source={{
+                uri: pokeImage?.sprites?.other?.['official-artwork']?.front_default,
+              }}
             />
           </>
         )}

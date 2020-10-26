@@ -1,1 +1,1 @@
-export const replaceNewLines = (string) => string.replace(/\n|\r/g, "")
+export const replaceNewLines = (string) => string.replace(/\n|\r/g, '');
