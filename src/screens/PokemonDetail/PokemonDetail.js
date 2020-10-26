@@ -6,6 +6,7 @@ import { CustomText } from '../../components/CustomText';
 import { Screen } from '../../components/Screen';
 import { useFetchAPI } from '../../hook/useFetchAPI';
 import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
+import { replaceNewLines } from '../../utils/replaceNewLines';
 
 const styles = StyleSheet.create({
   container: {
@@ -56,7 +57,7 @@ export const PokemonDetail = ({ route }) => {
             {pokemonData?.flavor_text_entries?.filter(({ language }) => language.name === 'en').map(({ flavor_text: flavorText }, index) => (
               <View style={styles.paragraph} key={String(index)}>
                 <CustomText>
-                  {flavorText.replace(/\n|\r/g, "")}
+                  {replaceNewLines(flavorText)}
                 </CustomText>
               </View>
             ))}
